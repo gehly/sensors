@@ -35,7 +35,7 @@ def build_geo_catalog(UTC_list, tle_dict={}):
     # UTC_list2 = [datetime(2023, 8, 1, 0, 0, 0)]
     
     if len(tle_dict) == 0:
-        tle_dict = build_tle_dict()
+        tle_dict = build_tle_dict(UTC_list=UTC_list)
     
     retrieve_tle_time = time.time() - start
 
@@ -187,16 +187,20 @@ def catalog_to_csv(catalog, csv_file):
 if __name__ == '__main__':
     
     # obj_id_list = [40146]
-    # UTC_list = [datetime(2023, 8, 1, 0, 0, 0)]
+    # UTC_list = [datetime(2023, 9, 15, 0, 0, 0)]
     
-    tle_dict = build_tle_dict()
+    UTC_list = []
     
-    datadir = '../data/2023_08_30_geo_catalog'
+    tle_dict = build_tle_dict(UTC_list=UTC_list)
     
-    for hr in range(24):
-        fname = os.path.join(datadir, 'catalog_geo_slot_2023_08_30_' + str(hr).zfill(2) + 'h_' + str(hr+1).zfill(2) + 'h.csv')
+    print('num objects', len(tle_dict))
+    
+    datadir = '../data/2023_10_14_geo_catalog'
+    
+    for hr in range(20,24):
+        fname = os.path.join(datadir, 'catalog_geo_slot_2023_10_14_' + str(hr).zfill(2) + 'h_' + str(hr+1).zfill(2) + 'h.csv')
         
-        UTC0 = datetime(2023, 8, 30, hr, 0, 0)
+        UTC0 = datetime(2023, 10, 14, hr, 0, 0)
         dt_vec = np.arange(0., 3600., 10.)
         UTC_list = [UTC0 + timedelta(seconds=dt) for dt in dt_vec]
         
